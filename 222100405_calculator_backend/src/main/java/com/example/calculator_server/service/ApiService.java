@@ -1,7 +1,6 @@
 package com.example.calculator_server.service;
 
 import com.example.calculator_server.domain.ResponseResult;
-import com.example.calculator_server.domain.vo.RateVo;
 
 import java.util.LinkedHashMap;
 
@@ -13,4 +12,6 @@ public interface ApiService {
     ResponseResult addHistory(String expression);
 
     ResponseResult getHistory();
+
+    Double getRate(Integer rateType, Integer storeTime, Integer money);
 }

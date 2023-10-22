@@ -3,15 +3,12 @@ package com.example.calculator_server.service.impl;
 import com.example.calculator_server.domain.DepRate;
 import com.example.calculator_server.domain.LoanRate;
 import com.example.calculator_server.domain.ResponseResult;
-import com.example.calculator_server.domain.vo.RateVo;
 import com.example.calculator_server.mapper.ApiMapper;
 import com.example.calculator_server.service.ApiService;
-import com.example.calculator_server.util.StrUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.LinkedHashMap;
-import java.util.List;
 
 @Service
 public class ApiServiceImpl implements ApiService {
@@ -58,5 +55,42 @@ public class ApiServiceImpl implements ApiService {
     @Override
     public ResponseResult getHistory() {
         return new ResponseResult(200, "历史记录", apiMapper.getHistory());
+    }
+
+    @Override
+    public Double getRate(Integer rateType, Integer storeTime, Integer money) {
+//        options2: ['三个月', '半年', '1年', '2年', '3年', '5年'],
+//        options3: ['半年', '1年', '2年', '3年', '4年', '5年'],
+        if (rateType == 0) {
+            switch (storeTime) {
+                case 0:
+                    return apiMapper.getDepRateTable().get(0).getThreeMon();
+                case 1:
+                    return apiMapper.getDepRateTable().get(0).getSixMon();
+                case 2:
+                    return apiMapper.getDepRateTable().get(0).getOneYear();
+                case 3:
+                    return apiMapper.getDepRateTable().get(0).getTwoYear();
+                case 4:
+                    return apiMapper.getDepRateTable().get(0).getThreeYear();
+                case 5:
+                    return apiMapper.getDepRateTable().get(0).getFiveYear();
+            }
+        } else if (rateType == 1) {
+            switch (storeTime) {
+                case 0:
+                    return apiMapper.getLoanRateTable().get(0).getSixMon();
+                case 1:
+                    return apiMapper.getLoanRateTable().get(0).getOneYear();
+                case 2:
+                    return apiMapper.getLoanRateTable().get(0).getOneToThree();
+                case 3:
+                case 4:
+                    return apiMapper.getLoanRateTable().get(0).getThreeToFive();
+                case 5:
+                    return apiMapper.getLoanRateTable().get(0).getFiveYear();
+            }
+        }
+        return null;
     }
 }

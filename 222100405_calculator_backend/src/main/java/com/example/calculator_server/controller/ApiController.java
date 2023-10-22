@@ -3,7 +3,6 @@ package com.example.calculator_server.controller;
 import com.example.calculator_server.domain.DepRate;
 import com.example.calculator_server.domain.LoanRate;
 import com.example.calculator_server.domain.ResponseResult;
-import com.example.calculator_server.domain.vo.RateVo;
 import com.example.calculator_server.service.ApiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -17,17 +16,11 @@ public class ApiController {
 
     @Autowired
     ApiService apiService;
-
-    @RequestMapping("/hello")
-    public String hello() {
-        return "Hello World!";
-    }
-
     @GetMapping("/getRate")
     public Double getRate(@RequestParam Integer rateType,
                           @RequestParam Integer storeTime,
                           @RequestParam Integer money) {
-        return 0.5;
+        return apiService.getRate(rateType, storeTime, money);
     }
 
     @GetMapping("/getRateTable")
